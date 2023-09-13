@@ -1,0 +1,14 @@
+name: ImmersiveElevators
+version: '${project.version}'
+main: top.azimkin.ImmersiveElevators
+api-version: '1.16'
+load: STARTUP
+
+commands:
+  createlift:
+    usage: /createlift <Name> <buttonX> <Y> <Z> <levels>
+    permission: il.create
+    aliases: cl
+  addfloor:
+    usage: /addfloor <lift name> <floor> <Y>
+    permission: il.addfloor

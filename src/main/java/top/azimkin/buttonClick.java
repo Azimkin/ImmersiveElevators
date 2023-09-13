@@ -13,11 +13,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import top.ultimatejsrpplugin.utils.dataFile;
 import static top.azimkin.configFile.*;
 import static top.azimkin.utils.*;
 
@@ -28,6 +28,7 @@ import static top.azimkin.utils.*;
  */
 
 public class buttonClick implements Listener {
+    static HashMap<Player, String> currentLift = new HashMap<>();
     //Говно которое, Я надеюсь, кто-то когда-то перепишет. - Азимкин
     private static int[] position_2 = {3, 5 , 12, 14, 21, 23, 30, 32, 39, 41, 48, 50};
     private static int[] position_1 = {4, 13, 22, 31, 40, 49};
@@ -59,7 +60,7 @@ public class buttonClick implements Listener {
                    //player.sendMessage("IF > 6");
                    rows = (short) Math.ceil(levels / 2.0);
                    inv = Bukkit.createInventory(null, rows*9, "Лифт");
-                   dataFile.set(player, "currentLift", key);
+                   currentLift.put(player, key);
                    for (int i = 0; i < levels; i++) {
                        //player.sendMessage("for (levels)");
                        if (getInt("lifts." + key + ".lvl_y." + (i+1))-1 != event.getPlayer().getLocation().getBlockY()) {
@@ -80,7 +81,7 @@ public class buttonClick implements Listener {
                    //player.sendMessage("else >6");
                    rows = (short) levels;
                    inv = Bukkit.createInventory(null, rows*9, "Лифт");
-                   dataFile.set(player, "currentLift", key);
+                   currentLift.put(player, key);
                    for (int i = 0; i < levels; i++) {
                        //player.sendMessage("for (levels)");
                        if (getInt("lifts." + key + ".lvl_y." + (i+1))-1 != event.getPlayer().getLocation().getBlockY()) {
@@ -133,7 +134,7 @@ public class buttonClick implements Listener {
         double playerZ = playerLocation.getZ();
         float playerYaw = playerLocation.getYaw();
         float playerPitch = playerLocation.getPitch();
-        int newPlayerY = getInt("lifts." + dataFile.getData(player, "currentLift") + ".lvl_y." + lvl);
+        int newPlayerY = getInt("lifts." + currentLift.get(player) + ".lvl_y." + lvl);
         if (newPlayerY == 0) {
             player.sendMessage(setColor("&cДанный этаж не настроен."));
             return;

@@ -2,7 +2,6 @@ package top.azimkin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import top.ultimatejsrpplugin.commands.utilities.lock;
 
 public final class ImmersiveElevators extends JavaPlugin {
 

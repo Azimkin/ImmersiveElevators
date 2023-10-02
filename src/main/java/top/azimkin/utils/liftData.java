@@ -1,4 +1,4 @@
-package top.azimkin;
+package top.azimkin.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class configFile {
+public class liftData {
     private static File fileLiftData;
     private static FileConfiguration dataFileLifts;
 

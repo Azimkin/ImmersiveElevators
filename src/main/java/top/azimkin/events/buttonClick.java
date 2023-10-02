@@ -1,4 +1,4 @@
-package top.azimkin;
+package top.azimkin.events;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -18,8 +18,9 @@ import java.util.List;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import static top.azimkin.configFile.*;
-import static top.azimkin.utils.*;
+import static top.azimkin.utils.utils.*;
+
+import static top.azimkin.utils.liftData.*;
 
 /*
 
@@ -45,7 +46,7 @@ public class buttonClick implements Listener {
             //player.sendMessage("return 2");
             return;
         }
-        List<String> list = configFile.getLifts();
+        List<String> list = getLifts();
        // player.sendMessage("list ok");
         for (String key : list) {
             int buttonX = event.getClickedBlock().getLocation().getBlockX();

@@ -1,4 +1,4 @@
-package top.azimkin;
+package top.azimkin.utils;
 
 import org.bukkit.ChatColor;
 

@@ -7,8 +7,12 @@ load: STARTUP
 commands:
   createlift:
     usage: /createlift <Name> <buttonX> <Y> <Z> <levels>
-    permission: il.create
+    permission: ie.create
     aliases: cl
   addfloor:
     usage: /addfloor <lift name> <floor> <Y>
-    permission: il.addfloor
+    permission: ie.addfloor
+  imeersiveelevators:
+    usage: /el
+    permission: ie.admin
+    aliases: el

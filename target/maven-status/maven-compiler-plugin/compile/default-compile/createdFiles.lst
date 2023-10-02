@@ -1,8 +1,10 @@
-top\azimkin\createLiftTabCompleter.class
+top\azimkin\commands\createLiftTabCompleter.class
+top\azimkin\commands\immersiveElevators.class
 top\azimkin\ImmersiveElevators.class
-top\azimkin\addFloor.class
-top\azimkin\configFile.class
-top\azimkin\buttonClick.class
-top\azimkin\addFloorTabCompleter.class
-top\azimkin\utils.class
-top\azimkin\createLift.class
+top\azimkin\commands\createLift.class
+top\azimkin\utils\utils.class
+top\azimkin\events\buttonClick.class
+top\azimkin\utils\liftData.class
+top\azimkin\utils\configFile.class
+top\azimkin\commands\addFloor.class
+top\azimkin\commands\addFloorTabCompleter.class

@@ -1,27 +1,26 @@
-package top.azimkin;
+package top.azimkin.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static top.azimkin.configFile.*;
+import static top.azimkin.utils.liftData.*;
 
 public class createLift implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (args.length < 5) {
+        if (args.length < 4) {
             return false;
         }
         Player player = (Player) sender;
-        short buttonX, buttonY, buttonZ, levels;
+        short buttonX, buttonY, buttonZ, levels = 1;
         String elevatorName = args[0];
         try {
             buttonX = Short.parseShort(args[1]);
             buttonY = Short.parseShort(args[2]);
             buttonZ = Short.parseShort(args[3]);
-            levels = Short.parseShort(args[4]);
         } catch (NumberFormatException exception) {
             player.sendMessage("Ошибка преобразования координат.");
             return true;

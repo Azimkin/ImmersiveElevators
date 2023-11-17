@@ -1,0 +1,7 @@
+lang-version: 1
+
+prefix: '&a&l[IE] &r'
+
+TranslationLoaded: 'Translations loaded! [EN]'
+
+Enabled: 'Plugin enabled in %ms%ms.'

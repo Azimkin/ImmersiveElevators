@@ -1,1 +1,13 @@
-lang: ru
+config-version: 4
+
+
+Lang: EN
+
+
+FloorMaterial: STONE
+
+
+ButtonMaterial: POLISHED_BLACKSTONE_BUTTON
+
+
+DefaultFirstFloor: 0

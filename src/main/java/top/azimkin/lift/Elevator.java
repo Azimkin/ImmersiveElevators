@@ -103,10 +103,10 @@ public class Elevator {
                     .setFloor(firstFloor)
                     .setFloorMaterial(floorMaterial)
                     .setButtonMaterial(buttonMaterial);
-            StringBuilder strbldr = new StringBuilder();
-            strbldr.append(posX);
-            strbldr.append(posZ);
-            strbldr.append(world);
+            StringBuilder strbldr = new StringBuilder()
+                    .append(posX)
+                    .append(posZ)
+                    .append(world);
             elevators.put(strbldr.toString(), elevator);
         }
     }
@@ -129,10 +129,10 @@ public class Elevator {
                 .setFloor(VStorage.defaultFirstFloor)
                 .setFloorMaterial(VStorage.defaultFloor)
                 .setButtonMaterial(VStorage.defaultButton);
-        StringBuilder strbldr = new StringBuilder();
-        strbldr.append(pos.getX());
-        strbldr.append(pos.getZ());
-        strbldr.append(pos.getWorld());
+        StringBuilder strbldr = new StringBuilder()
+                .append(pos.getX())
+                .append(pos.getZ())
+                .append(pos.getWorld());
         elevators.put(strbldr.toString(), elevator);
     }
 }

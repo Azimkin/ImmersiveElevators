@@ -1,8 +1,10 @@
-lang-version: 2
+lang-version: 4
 
 prefix: '&a&l[IE] &r'
 TranslationLoaded: 'Translations loaded! [EN]'
-LiftDataLoaded: 'Lift data loaded!'
+LiftDataLoaded: 'Elevator data loaded!'
 Enabled: 'Plugin enabled in %ms%ms.'
 help: "Immersive Elevators help: \n/el create <name>"
 success-create-lift: "Lift %name% created successful"
+lift-name: 'Elevator'
+floor-destination: "Now you're on the &6%floor%&ffloor"

@@ -33,6 +33,18 @@ public class LiftStorage {
         PLUGIN.getLogger().info(Lang.getClearLang("LiftDataLoaded"));
     }
 
+    public static FileConfiguration getDataFile() {
+        return data;
+    }
+
+    public static void save() {
+        try {
+            data.save(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static String getStr(String route) {
         return data.getString(route) == null ? "0" : data.getString(route);
     }
@@ -42,11 +54,7 @@ public class LiftStorage {
     }
 
     public static int getInt(String name, String route) {
-        if (data.contains(route)) {
-            return data.getInt(Lifts + name + "." + route);
-        } else {
-            return -2147483648; // error code lol
-        }
+        return data.getInt(Lifts + name + "." + route);
     }
 
     public static List<String> getLifts() {
@@ -58,8 +66,20 @@ public class LiftStorage {
         return temp;
     }
 
-    public static Material getMat(String name, String route) {
-        return Material.getMaterial(data.getString(Lifts + name + "." + route));
+    public static Material getFloorMat(String name) {
+        String temp = data.getString(Lifts + name + ".floorMaterial");
+        if (temp.equals("default"))
+            return VStorage.defaultFloor;
+        else
+            return Material.getMaterial(temp);
+    }
+
+    public static Material getButtonMat(String name) {
+        String temp = data.getString(Lifts+name+".buttonMaterial");
+        if (temp.equals("default"))
+            return VStorage.defaultButton;
+        else
+            return Material.getMaterial(temp);
     }
 
     public static World getWorld(String name) {

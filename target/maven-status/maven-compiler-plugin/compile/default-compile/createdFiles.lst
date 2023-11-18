@@ -1,4 +1,10 @@
-top\azimkin\ImmersiveElevators.class
 top\azimkin\utilities\Lang.class
 top\azimkin\utilities\TextUtilities.class
+top\azimkin\utilities\VStorage.class
+top\azimkin\commands\ImmersiveElevatorsCommand.class
+top\azimkin\ImmersiveElevators.class
+top\azimkin\events\ButtonClick.class
+top\azimkin\lift\Elevator.class
+top\azimkin\lift\XZW.class
+top\azimkin\utilities\LiftStorage.class
 top\azimkin\utilities\ConfigManager.class

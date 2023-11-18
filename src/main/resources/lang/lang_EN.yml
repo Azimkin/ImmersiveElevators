@@ -4,3 +4,5 @@ prefix: '&a&l[IE] &r'
 TranslationLoaded: 'Translations loaded! [EN]'
 LiftDataLoaded: 'Lift data loaded!'
 Enabled: 'Plugin enabled in %ms%ms.'
+help: "Immersive Elevators help: \n/el create <name>"
+success-create-lift: "Lift %name% created successful"

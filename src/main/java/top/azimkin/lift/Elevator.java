@@ -1,13 +1,15 @@
 package top.azimkin.lift;
 
-import dev.dejvokep.boostedyaml.route.Route;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import top.azimkin.utilities.LiftStorage;
 import top.azimkin.utilities.VStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Elevator {
     private int posX;
@@ -17,36 +19,9 @@ public class Elevator {
     private Material customButton;
     private World world;
     private String name;
-    public static List<Elevator> elevators = new ArrayList<>();
+    public static Map<String, Elevator> elevators = new HashMap<>();
 
     Elevator() {}
-
-    Elevator(int posX, int posZ, int minFloor) {
-        this.posX = posX;
-        this.posZ = posZ;
-        this.minFloor = minFloor;
-    }
-    Elevator(int posX, int posZ, int minFloor, Material customFloor) {
-        this.posX = posX;
-        this.posZ = posZ;
-        this.minFloor = minFloor;
-        this.customFloor = customFloor;
-    }
-
-    Elevator(int posX, int posZ, int minFloor, Material customButton, boolean button) {
-        this.posX = posX;
-        this.posZ = posZ;
-        this.minFloor = minFloor;
-        this.customButton = customButton;
-    }
-
-    Elevator(int posX, int posZ, int minFloor, Material customFloor, Material customButton) {
-        this.posX = posX;
-        this.posZ = posZ;
-        this.minFloor = minFloor;
-        this.customButton = customButton;
-        this.customFloor = customFloor;
-    }
 
     public Elevator setPosX (int X) {
         this.posX = X;
@@ -83,30 +58,81 @@ public class Elevator {
         return this;
     }
 
+    public int getX() {
+        return posX;
+    }
+
+    public int getZ() {
+        return posZ;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public Material getFloor () {
+        return customFloor;
+    }
+
+    public Material getButton() {
+        return customButton;
+    }
+
     public static void register() {
-        List<String> lifts = LiftStorage.getLifts();
-
-        for (String name : lifts) {
-            Elevator el = new Elevator()
+        int posX;
+        int posZ;
+        World world;
+        int firstFloor;
+        Material buttonMaterial;
+        Material floorMaterial;
+        for (String name : LiftStorage.getLifts())
+        {
+            posX = LiftStorage.getInt(name, "posX");
+            posZ = LiftStorage.getInt(name, "posZ");
+            world = LiftStorage.getWorld(name);
+            firstFloor = LiftStorage.getInt(name, "firstFloor");
+            if (firstFloor == -2147483648)
+                firstFloor = VStorage.defaultFirstFloor;
+            buttonMaterial = LiftStorage.getButtonMat(name);
+            floorMaterial = LiftStorage.getFloorMat(name);
+            Elevator elevator = new Elevator()
                     .setName(name)
-                    .setPosX(LiftStorage.getInt(name, "posX"))
-                    .setPosZ(LiftStorage.getInt(name, "posZ"))
-                    .setWorld(LiftStorage.getWorld(name));
-            if (LiftStorage.getInt(name, "minFloor") == -2147483648)
-                el.setFloor(VStorage.defaultFirstFloor);
-            else
-                el.setFloor(LiftStorage.getInt(name, "minFloor"));
-
-            if (LiftStorage.getMat(name, "customFloor") != null) {
-                el.setFloorMaterial(LiftStorage.getMat(name, "customFloor"));
-            } else {
-                el.setFloorMaterial(VStorage.defaultFloor);
-            }
-
-            if (LiftStorage.getMat(name, "customButton") == null)
-                el.setButtonMaterial(VStorage.defaultButton);
-            else
-                el.setButtonMaterial(LiftStorage.getMat(name, "customButton"));
+                    .setPosX(posX)
+                    .setPosZ(posZ)
+                    .setWorld(world)
+                    .setFloor(firstFloor)
+                    .setFloorMaterial(floorMaterial)
+                    .setButtonMaterial(buttonMaterial);
+            StringBuilder strbldr = new StringBuilder();
+            strbldr.append(posX);
+            strbldr.append(posZ);
+            strbldr.append(world);
+            elevators.put(strbldr.toString(), elevator);
         }
+    }
+
+    public static void add(String name, XZW pos) {
+        FileConfiguration data = LiftStorage.getDataFile();
+        String ln = "Lifts." + name + ".";
+        data.set(ln + "world", pos.getWorld().getName());
+        data.set(ln + "posX", pos.getX());
+        data.set(ln + "posZ", pos.getZ());
+        data.set(ln + "firstFloor", 2147483647);
+        data.set(ln + "buttonMaterial", "default");
+        data.set(ln + "floorMaterial", "default");
+        LiftStorage.save();
+        Elevator elevator = new Elevator()
+                .setName(name)
+                .setWorld(pos.getWorld())
+                .setPosX(pos.getX())
+                .setPosZ(pos.getZ())
+                .setFloor(VStorage.defaultFirstFloor)
+                .setFloorMaterial(VStorage.defaultFloor)
+                .setButtonMaterial(VStorage.defaultButton);
+        StringBuilder strbldr = new StringBuilder();
+        strbldr.append(pos.getX());
+        strbldr.append(pos.getZ());
+        strbldr.append(pos.getWorld());
+        elevators.put(strbldr.toString(), elevator);
     }
 }

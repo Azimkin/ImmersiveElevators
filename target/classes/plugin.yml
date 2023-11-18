@@ -3,3 +3,13 @@ version: '0.1.2'
 main: top.azimkin.ImmersiveElevators
 api-version: '1.16'
 load: STARTUP
+
+commands:
+  elevators:
+    usage: /el help
+    permission: ie.commands.el
+    description: main command
+    aliases:
+      - ie
+      - el
+      - immersiveelevators

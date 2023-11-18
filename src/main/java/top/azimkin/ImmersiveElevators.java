@@ -2,6 +2,8 @@ package top.azimkin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import top.azimkin.commands.ImmersiveElevatorsCommand;
+import top.azimkin.events.ButtonClick;
 import top.azimkin.lift.Elevator;
 import top.azimkin.utilities.ConfigManager;
 import top.azimkin.utilities.Lang;
@@ -20,6 +22,8 @@ public final class ImmersiveElevators extends JavaPlugin {
         Lang.setup();
         LiftStorage.setup();
         Elevator.register();
+        getCommand("elevators").setExecutor(new ImmersiveElevatorsCommand());
+        getServer().getPluginManager().registerEvents(new ButtonClick(), this);
 
         getLogger().info(GC + Lang.getClearLang("Enabled")
                 .replace("%ms%", String.valueOf(System.currentTimeMillis()-strt))+ CC);

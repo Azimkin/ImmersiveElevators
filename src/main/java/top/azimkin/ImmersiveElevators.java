@@ -2,8 +2,10 @@ package top.azimkin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import top.azimkin.lift.Elevator;
 import top.azimkin.utilities.ConfigManager;
 import top.azimkin.utilities.Lang;
+import top.azimkin.utilities.LiftStorage;
 
 public final class ImmersiveElevators extends JavaPlugin {
     private static ImmersiveElevators IE;
@@ -16,6 +18,8 @@ public final class ImmersiveElevators extends JavaPlugin {
         IE = this;
         ConfigManager.setup();
         Lang.setup();
+        LiftStorage.setup();
+        Elevator.register();
 
         getLogger().info(GC + Lang.getClearLang("Enabled")
                 .replace("%ms%", String.valueOf(System.currentTimeMillis()-strt))+ CC);

@@ -6,6 +6,7 @@ import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import org.bukkit.Material;
 import top.azimkin.ImmersiveElevators;
 
 import java.io.File;
@@ -26,9 +27,19 @@ public class ConfigManager {
         } catch (IOException exception) {
             PLUGIN.getLogger().warning("What a hell");
         }
+        PLUGIN.getLogger().info("Config loaded!");
     }
 
     public static String getStr(String path) {
         return config.getString(path);
+    }
+
+    public static Material getMat(String selection) {
+        return Material.getMaterial(config.getString(selection)) == null ? Material.STONE :
+                Material.getMaterial(config.getString(selection));
+    }
+
+    public static int getInt(String selection) {
+        return config.getInt(selection);
     }
 }

@@ -23,6 +23,7 @@ public final class ImmersiveElevators extends JavaPlugin {
         LiftStorage.setup();
         Elevator.register();
         getCommand("elevators").setExecutor(new ImmersiveElevatorsCommand());
+        getCommand("elevators").setTabCompleter(new ImmersiveElevatorsCommand());
         getServer().getPluginManager().registerEvents(new ButtonClick(), this);
 
         getLogger().info(GC + Lang.getClearLang("Enabled")

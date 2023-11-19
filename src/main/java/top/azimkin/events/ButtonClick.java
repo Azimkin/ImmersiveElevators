@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,6 +44,10 @@ public class ButtonClick implements Listener {
         Elevator el = Elevator.elevators.get(strbldr.toString());
         if (el == null)
             return;
+        if(!(event.getPlayer().hasPermission("elevators.use"))) {
+            event.getPlayer().sendMessage(Lang.getLang("no-permission"));
+            return;
+        }
         if (event.getClickedBlock().getType() != el.getButton())
             return;
         Location fLoc = event.getPlayer().getLocation();
@@ -61,7 +66,7 @@ public class ButtonClick implements Listener {
             }
         }
         VStorage.currentElevator.put(event.getPlayer(), el);
-        Inventory inv = Bukkit.createInventory(new LiftGUIHolder(), 54, Lang.getClearLang("lift-name"));
+        Inventory inv = Bukkit.createInventory(new LiftGUIHolder(), 54, Lang.getClearLang("elevator-name"));
         int[] tempRows = {};
         if (levels < 7)
             tempRows = rows1;
@@ -111,6 +116,7 @@ public class ButtonClick implements Listener {
             dir = Direction.Down;
         else
             dir = Direction.Up;
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK,1 ,1);
         int mh = player.getWorld().getMinHeight();
         int mxh = player.getWorld().getMaxHeight();
         Location location = new Location(player.getWorld(), el.getX(), 0, el.getZ());

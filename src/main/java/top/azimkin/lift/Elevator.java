@@ -91,7 +91,7 @@ public class Elevator {
             posZ = LiftStorage.getInt(name, "posZ");
             world = LiftStorage.getWorld(name);
             firstFloor = LiftStorage.getInt(name, "firstFloor");
-            if (firstFloor == -2147483648)
+            if (firstFloor == 2147483647)
                 firstFloor = VStorage.defaultFirstFloor;
             buttonMaterial = LiftStorage.getButtonMat(name);
             floorMaterial = LiftStorage.getFloorMat(name);
@@ -133,8 +133,40 @@ public class Elevator {
                 .setButtonMaterial(VStorage.defaultButton);
         StringBuilder strbldr = new StringBuilder()
                 .append(pos.getX())
+                .append(";")
                 .append(pos.getZ())
+                .append(";")
                 .append(pos.getWorld());
         elevators.put(strbldr.toString(), elevator);
+    }
+
+    public static void editFloorMaterial(String name, String material) {
+        Elevator elevator = elevators.get(LiftStorage.getXZW(name));
+        if (Material.getMaterial(material) == null) {
+            elevator.setFloorMaterial(VStorage.defaultFloor);
+            LiftStorage.getDataFile().set("Lifts." + name + ".floorMaterial", VStorage.defaultFloor);
+            LiftStorage.save();
+        }
+        else {
+            elevator.setFloorMaterial(Material.getMaterial(material));
+            LiftStorage.getDataFile().set("Lifts." + name + ".floorMaterial", Material.getMaterial(material));
+            LiftStorage.save();
+        }
+        elevators.put(LiftStorage.getXZW(name), elevator);
+    }
+
+    public static void editButtonMat(String name, String material) {
+        Elevator elevator = elevators.get(LiftStorage.getXZW(name));
+        if (Material.getMaterial(material) == null) {
+            elevator.setButtonMaterial(VStorage.defaultButton);
+            LiftStorage.getDataFile().set("Lifts." + name + ".buttonMaterial", VStorage.defaultButton);
+            LiftStorage.save();
+        }
+        else {
+            elevator.setButtonMaterial(Material.getMaterial(material));
+            LiftStorage.getDataFile().set("Lifts." + name + ".buttonMaterial", Material.getMaterial(material));
+            LiftStorage.save();
+        }
+        elevators.put(LiftStorage.getXZW(name), elevator);
     }
 }

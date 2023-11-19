@@ -1,10 +1,15 @@
-lang-version: 4
+lang-version: 1
 
 prefix: '&a&l[IE] &r'
 TranslationLoaded: 'Translations loaded! [EN]'
 LiftDataLoaded: 'Elevator data loaded!'
 Enabled: 'Plugin enabled in %ms%ms.'
 help: "Immersive Elevators help: \n/el create <name>"
-success-create-lift: "Lift %name% created successful"
-lift-name: 'Elevator'
-floor-destination: "Now you're on the &6%floor%&ffloor"
+success-create-lift: "Elevator &6%name%&f has been successfully created"
+elevator-name: 'Elevator'
+floor-destination: "You're on the &6%floor%&f floor"
+unknown-elevator: "Unknown elevator"
+elevator-removed: "Elevator &6%name%&f has been successfully removed"
+no-permission: "You don't have enough permissions"
+button-changed: "Button material in %name% changed to %material%"
+floor-changed: "Floor material in %name% changed to %material%"

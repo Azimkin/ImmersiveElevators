@@ -31,7 +31,7 @@ public class Lang {
         } catch (IOException exception) {
             PLUGIN.getLogger().warning("What a hell");
         }
-        PREFIX = getLang("prefix");
+        PREFIX = getClearLang("prefix");
         PLUGIN.getLogger().info(getClearLang("TranslationLoaded"));
     }
 
@@ -43,6 +43,6 @@ public class Lang {
     }
 
     public static String getClearLang(String translation) {
-        return lang.getString(translation) == null ? "idk" : lang.getString(translation);
+        return lang.getString(translation) == null ? "unknown translation" : lang.getString(translation);
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import top.azimkin.ImmersiveElevators;
+import top.azimkin.lift.XZW;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,5 +85,16 @@ public class LiftStorage {
 
     public static World getWorld(String name) {
         return Bukkit.getWorld(data.getString(Lifts + name + ".world"));
+    }
+
+    public static String getXZW(String name) {
+        int x, z;
+        World world;
+        x = data.getInt(Lifts + name + ".posX");
+        z = data.getInt(Lifts + name + ".posZ");
+        world = Bukkit.getWorld(data.getString(Lifts + name + ".world"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(x).append(";").append(z).append(";").append(world);
+        return sb.toString();
     }
 }

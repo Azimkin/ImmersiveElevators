@@ -5,6 +5,7 @@ top\azimkin\utilities\LiftGUIHolder.class
 top\azimkin\commands\ImmersiveElevatorsCommand.class
 top\azimkin\ImmersiveElevators.class
 top\azimkin\events\ButtonClick.class
+top\azimkin\lift\Direction.class
 top\azimkin\lift\Elevator.class
 top\azimkin\lift\XZW.class
 top\azimkin\utilities\LiftStorage.class

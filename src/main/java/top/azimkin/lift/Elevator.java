@@ -105,7 +105,9 @@ public class Elevator {
                     .setButtonMaterial(buttonMaterial);
             StringBuilder strbldr = new StringBuilder()
                     .append(posX)
+                    .append(";")
                     .append(posZ)
+                    .append(";")
                     .append(world);
             elevators.put(strbldr.toString(), elevator);
         }

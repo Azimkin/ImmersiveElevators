@@ -11,4 +11,5 @@ public class VStorage {
     public static final Material defaultButton = ConfigManager.getMat("ButtonMaterial");
     public static final int defaultFirstFloor = ConfigManager.getInt("DefaultFirstFloor");
     public static HashMap<Player, Elevator> currentElevator = new HashMap<>();
+    public static HashMap<Player, Integer> currentFloor = new HashMap<>();
 }

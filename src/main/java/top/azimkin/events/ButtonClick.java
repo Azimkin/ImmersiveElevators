@@ -14,6 +14,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import top.azimkin.ImmersiveElevators;
+import top.azimkin.lift.Direction;
 import top.azimkin.lift.Elevator;
 import top.azimkin.lift.XZW;
 import top.azimkin.utilities.Lang;
@@ -22,6 +25,7 @@ import top.azimkin.utilities.TextUtilities;
 import top.azimkin.utilities.VStorage;
 
 public class ButtonClick implements Listener {
+    private static final ImmersiveElevators PLUGIN = ImmersiveElevators.getInstance();
     private static final int[] rows1 = {49, 40, 31, 22, 13, 4};
     private static final int[] rows2 = {50, 48, 41, 39, 32, 30, 23, 21, 14, 12, 5, 3};
     private static final int[] rows3 = {50, 49, 48, 41, 40, 39, 32, 31, 30, 23, 22, 21, 14, 13, 12, 5, 4, 3};
@@ -32,9 +36,13 @@ public class ButtonClick implements Listener {
         XZW pos = new XZW(event.getClickedBlock().getX(), event.getClickedBlock().getZ(), Bukkit.getWorld("world"));
         StringBuilder strbldr = new StringBuilder()
                 .append(pos.getX())
+                .append(";")
                 .append(pos.getZ())
+                .append(";")
                 .append(pos.getWorld());
         Elevator el = Elevator.elevators.get(strbldr.toString());
+        if (el == null)
+            return;
         if (event.getClickedBlock().getType() != el.getButton())
             return;
         Location fLoc = event.getPlayer().getLocation();
@@ -68,6 +76,7 @@ public class ButtonClick implements Listener {
             if (i == currentButton) {
                 meta.setDisplayName(TextUtilities.format("&e" + i));
                 item = new ItemStack(Material.GRAY_CONCRETE);
+                VStorage.currentFloor.put(event.getPlayer(), i);
             }
             item.setItemMeta(meta);
             inv.setItem(tempRows[i-1], item);
@@ -80,6 +89,8 @@ public class ButtonClick implements Listener {
         if(!(event.getInventory().getHolder() instanceof LiftGUIHolder))
             return;
         event.setCancelled(true);
+        if(event.getCurrentItem().getType() == Material.GRAY_CONCRETE)
+            return;
         Player player = (Player) event.getWhoClicked();
         Elevator el = VStorage.currentElevator.get(player);
         StringBuilder sb = new StringBuilder();
@@ -95,22 +106,45 @@ public class ButtonClick implements Listener {
         } catch (NumberFormatException exception) {
             return;
         }
+        Direction dir;
+        if (VStorage.currentFloor.get(player) > floor)
+            dir = Direction.Down;
+        else
+            dir = Direction.Up;
         int mh = player.getWorld().getMinHeight();
         int mxh = player.getWorld().getMaxHeight();
         Location location = new Location(player.getWorld(), el.getX(), 0, el.getZ());
-        int lvls = 0;
         int height = 0;
-        for(int i = mh; i < mxh; i++){
+        int lvl = 0;
+        int[] floorsA = new int[18];
+        int j = 0;
+        for (int i = mh; i < mxh; i++) {
             location.setY(i);
-            lvls++;
-            if (lvls == floor)
-                height = location.getBlockY()-1;
+            if (location.getBlock().getType() == el.getButton()) {
+                lvl++;
+                floorsA[j] = i;
+                j++;
+                if (lvl == floor) {
+                    height = i;
+                    break;
+                }
+            }
         }
         Location pnloc = player.getLocation();
-        pnloc.setY(height);
+//        if (dir == Direction.Up) {
+//            int i = 0;
+//            new BukkitRunnable() {
+//                @Override
+//                public void run() {
+//
+//                }
+//            }.runTaskTimer(PLUGIN, 0L, 1L);
+//        }
+        pnloc.setY(height-1);
         player.teleport(pnloc);
         player.closeInventory();
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                TextComponent.fromLegacyText(TextUtilities.format(Lang.getClearLang("floor-destination"))));
+                TextComponent.fromLegacyText(TextUtilities.format(Lang.getClearLang("floor-destination")
+                        .replace("%floor%", String.valueOf(floor)))));
     }
 }

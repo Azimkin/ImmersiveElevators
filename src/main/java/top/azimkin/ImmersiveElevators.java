@@ -1,6 +1,5 @@
 package top.azimkin;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.azimkin.commands.ImmersiveElevatorsCommand;
 import top.azimkin.events.ButtonClick;
@@ -16,7 +15,7 @@ public final class ImmersiveElevators extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        long strt = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         IE = this;
         ConfigManager.setup();
         Lang.setup();
@@ -27,7 +26,7 @@ public final class ImmersiveElevators extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ButtonClick(), this);
 
         getLogger().info(GC + Lang.getClearLang("Enabled")
-                .replace("%ms%", String.valueOf(System.currentTimeMillis()-strt))+ CC);
+                .replace("%ms%", String.valueOf(System.currentTimeMillis() - start)) + CC);
     }
 
     @Override
@@ -35,8 +34,7 @@ public final class ImmersiveElevators extends JavaPlugin {
 
     }
 
-    public static ImmersiveElevators getInstance()
-    {
+    public static ImmersiveElevators getInstance() {
         return IE;
     }
 

@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 import top.azimkin.ImmersiveElevators;
 import top.azimkin.lift.Direction;
 import top.azimkin.lift.Elevator;
@@ -30,10 +29,10 @@ public class ButtonClick implements Listener {
     private static final int[] rows1 = {49, 40, 31, 22, 13, 4};
     private static final int[] rows2 = {50, 48, 41, 39, 32, 30, 23, 21, 14, 12, 5, 3};
     private static final int[] rows3 = {50, 49, 48, 41, 40, 39, 32, 31, 30, 23, 22, 21, 14, 13, 12, 5, 4, 3};
+
     @EventHandler
     private static void onButtonClick(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
-            return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         XZW pos = new XZW(event.getClickedBlock().getX(), event.getClickedBlock().getZ(), Bukkit.getWorld("world"));
         StringBuilder strbldr = new StringBuilder()
                 .append(pos.getX())
@@ -42,26 +41,24 @@ public class ButtonClick implements Listener {
                 .append(";")
                 .append(pos.getWorld());
         Elevator el = Elevator.elevators.get(strbldr.toString());
-        if (el == null)
-            return;
-        if(!(event.getPlayer().hasPermission("elevators.use"))) {
+        if (el == null) return;
+        if (!(event.getPlayer().hasPermission("elevators.use"))) {
             event.getPlayer().sendMessage(Lang.getLang("no-permission"));
             return;
         }
-        if (event.getClickedBlock().getType() != el.getButton())
-            return;
+        if (event.getClickedBlock().getType() != el.getButton()) return;
         Location fLoc = event.getPlayer().getLocation();
-        fLoc.setY(event.getPlayer().getLocation().getBlockY()-1);
-        if(fLoc.getBlock().getType() != el.getFloor())
+        fLoc.setY(event.getPlayer().getLocation().getBlockY() - 1);
+        if (fLoc.getBlock().getType() != el.getFloor())
             return;
         int levels = 0;
         int currentButton = 0;
         Location loc = event.getClickedBlock().getLocation();
-        for(int i = pos.getWorld().getMinHeight(); i < pos.getWorld().getMaxHeight(); i++){
+        for (int i = pos.getWorld().getMinHeight(); i < pos.getWorld().getMaxHeight(); i++) {
             loc.setY(i);
             if (loc.getBlock().getType() == el.getButton()) {
                 levels++;
-                if(i == event.getClickedBlock().getLocation().getBlockY())
+                if (i == event.getClickedBlock().getLocation().getBlockY())
                     currentButton = levels;
             }
         }
@@ -74,7 +71,7 @@ public class ButtonClick implements Listener {
             tempRows = rows2;
         else if (levels < 19)
             tempRows = rows3;
-        for(int i = levels; i > 0; i--) {
+        for (int i = levels; i > 0; i--) {
             ItemStack item = new ItemStack(Material.LIGHT_GRAY_CONCRETE);
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(TextUtilities.format("&f" + i));
@@ -84,17 +81,17 @@ public class ButtonClick implements Listener {
                 VStorage.currentFloor.put(event.getPlayer(), i);
             }
             item.setItemMeta(meta);
-            inv.setItem(tempRows[i-1], item);
+            inv.setItem(tempRows[i - 1], item);
         }
         event.getPlayer().openInventory(inv);
     }
 
     @EventHandler
     private static void onPlayerClickGuiButton(InventoryClickEvent event) {
-        if(!(event.getInventory().getHolder() instanceof LiftGUIHolder))
+        if (!(event.getInventory().getHolder() instanceof LiftGUIHolder))
             return;
         event.setCancelled(true);
-        if(event.getCurrentItem().getType() == Material.GRAY_CONCRETE)
+        if (event.getCurrentItem().getType() == Material.GRAY_CONCRETE)
             return;
         Player player = (Player) event.getWhoClicked();
         Elevator el = VStorage.currentElevator.get(player);
@@ -116,7 +113,7 @@ public class ButtonClick implements Listener {
             dir = Direction.Down;
         else
             dir = Direction.Up;
-        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK,1 ,1);
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
         int mh = player.getWorld().getMinHeight();
         int mxh = player.getWorld().getMaxHeight();
         Location location = new Location(player.getWorld(), el.getX(), 0, el.getZ());
@@ -146,7 +143,7 @@ public class ButtonClick implements Listener {
 //                }
 //            }.runTaskTimer(PLUGIN, 0L, 1L);
 //        }
-        pnloc.setY(height-1);
+        pnloc.setY(height - 1);
         player.teleport(pnloc);
         player.closeInventory();
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,

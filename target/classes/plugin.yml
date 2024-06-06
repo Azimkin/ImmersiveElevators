@@ -2,7 +2,7 @@ name: ImmersiveElevators
 version: '0.1.2'
 main: top.azimkin.ImmersiveElevators
 api-version: '1.16'
-load: STARTUP
+load: POSTWORLD
 
 commands:
   elevators:

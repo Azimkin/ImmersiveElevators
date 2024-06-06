@@ -6,9 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import top.azimkin.utilities.LiftStorage;
 import top.azimkin.utilities.VStorage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Elevator {
@@ -21,14 +19,15 @@ public class Elevator {
     private String name;
     public static Map<String, Elevator> elevators = new HashMap<>();
 
-    Elevator() {}
+    Elevator() {
+    }
 
-    public Elevator setPosX (int X) {
+    public Elevator setPosX(int X) {
         this.posX = X;
         return this;
     }
 
-    public Elevator setPosZ (int Z) {
+    public Elevator setPosZ(int Z) {
         this.posZ = Z;
         return this;
     }
@@ -70,7 +69,7 @@ public class Elevator {
         return world;
     }
 
-    public Material getFloor () {
+    public Material getFloor() {
         return customFloor;
     }
 
@@ -85,8 +84,7 @@ public class Elevator {
         int firstFloor;
         Material buttonMaterial;
         Material floorMaterial;
-        for (String name : LiftStorage.getLifts())
-        {
+        for (String name : LiftStorage.getLifts()) {
             posX = LiftStorage.getInt(name, "posX");
             posZ = LiftStorage.getInt(name, "posZ");
             world = LiftStorage.getWorld(name);
@@ -146,8 +144,7 @@ public class Elevator {
             elevator.setFloorMaterial(VStorage.defaultFloor);
             LiftStorage.getDataFile().set("Lifts." + name + ".floorMaterial", VStorage.defaultFloor);
             LiftStorage.save();
-        }
-        else {
+        } else {
             elevator.setFloorMaterial(Material.getMaterial(material));
             LiftStorage.getDataFile().set("Lifts." + name + ".floorMaterial", Material.getMaterial(material));
             LiftStorage.save();
@@ -161,8 +158,7 @@ public class Elevator {
             elevator.setButtonMaterial(VStorage.defaultButton);
             LiftStorage.getDataFile().set("Lifts." + name + ".buttonMaterial", VStorage.defaultButton);
             LiftStorage.save();
-        }
-        else {
+        } else {
             elevator.setButtonMaterial(Material.getMaterial(material));
             LiftStorage.getDataFile().set("Lifts." + name + ".buttonMaterial", Material.getMaterial(material));
             LiftStorage.save();

@@ -1,0 +1,14 @@
+config-version: 1
+
+# Now only English, but you can make custom translation.
+# In folder plugins/ImmersiveElevators/lang/ create custom file named lang_<id>.yml (example: lang_UA.yml)
+Lang: EN
+
+# Default lift floor material? you can make custom in every lift by /el setfloor <name> <material>
+FloorMaterial: STONE
+
+# Default lift floor material? you can make custom in every lift by /el setbutton <name> <button material>
+ButtonMaterial: POLISHED_BLACKSTONE_BUTTON
+
+# Now doesn't work, because I'm lazy :)
+DefaultFirstFloor: 0
